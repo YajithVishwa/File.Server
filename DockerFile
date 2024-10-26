@@ -7,6 +7,8 @@ ENV PYTHONDONTWRITEBYTECODE=1
 # Ensures that Python output is sent straight to the terminal without buffering
 ENV PYTHONUNBUFFERED=1 
 
+ENV UPLOAD_FOLDER='/upload'
+
 # Set working directory
 WORKDIR /app
 
