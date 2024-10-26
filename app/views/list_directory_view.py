@@ -1,19 +1,16 @@
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, jsonify, request, current_app
 from ..models.ListDirectory import ListDirectoryModel
 from ..main import health_check
 
 list_directory_blueprint = Blueprint('listDirectory', __name__)
 
-@list_directory_blueprint.route('/api/health', methods=['GET'])
-def health():
-    return health_check()
-
 @list_directory_blueprint.route('/api/list', methods=['GET'])
 def list_dir():
+    root_path = current_app.config['UPLOAD_FOLDER']
     data = request.form
     if not data or 'path' not in data:
         return jsonify({"Error": "Path parameter is required"}), 400
-    path = data['path']
+    path = root_path+data['path']
     list_directory_model = ListDirectoryModel(path)
     result = list_directory_model.get_content()
     if "Error" in result:

@@ -1,9 +1,13 @@
 # app/__init__.py
 from flask import Flask
+import os
 
 def create_app():
     app = Flask(__name__)
     app.config.from_object('config.Config')
+    print(app.config['UPLOAD_FOLDER'])
+    if not os.path.exists(app.config['UPLOAD_FOLDER']):
+        os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 
     with app.app_context():
         # Import routes and register blueprints

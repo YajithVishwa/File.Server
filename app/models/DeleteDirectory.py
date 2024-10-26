@@ -1,11 +1,13 @@
 import os
-from flask import jsonify
+from flask import jsonify, current_app
 
 class DeleteDirectoryModel:
     def __init__(self, path, recursive='False'):
+        self.root_fullPath = current_app.config['UPLOAD_FOLDER']
         self.path = path
+        self.full_path = self.root_fullPath + self.path
         self.recursive = recursive
-        self.status = self._delete_directory(path)
+        self.status = self._delete_directory()
     
     def check_files_in_folder(self, folder_path):
         for entry in os.listdir(folder_path):
@@ -23,20 +25,20 @@ class DeleteDirectoryModel:
                 os.remove(entry_path)
         os.rmdir(folder_path)
 
-    def _delete_directory(self, path):
+    def _delete_directory(self):
         try:
-            if os.path.exists(path):
-                if os.path.isfile(path):
-                    os.remove(path)
+            if os.path.exists(self.full_path):
+                if os.path.isfile(self.full_path):
+                    os.remove(self.full_path)
                 else:
-                    if self.check_files_in_folder(self.path):
+                    if self.check_files_in_folder(self.full_path):
                         if self.recursive == 'True':
-                            self.delete_files_recursively(self.path)
+                            self.delete_files_recursively(self.full_path)
                         else:
                             raise Exception("Directory Contain Files, Add recursive as True and try again.")
                     else:
-                        if not self.check_files_in_folder(self.path):
-                            os.rmdir(path)
+                        if not self.check_files_in_folder(self.full_path):
+                            os.rmdir(self.full_path)
                         else:
                             raise Exception("Directory Contain Files, Add recursive as True and try again.")
             else:

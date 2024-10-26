@@ -4,7 +4,7 @@ from ..main import health_check
 
 metadata_directory_blueprint = Blueprint('metadataDirectory', __name__)
 
-@metadata_directory_blueprint.route('/api/get-status', methods=['GET'])
+@metadata_directory_blueprint.route('/api/status', methods=['GET'])
 def metadata_dir():
     data = request.form
     if not data or 'path' not in data:

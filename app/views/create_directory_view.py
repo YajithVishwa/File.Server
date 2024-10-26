@@ -13,7 +13,7 @@ def create_dir():
     if "isFile" in data:
         isFile = data['isFile']
     create_directory_model = CreateDirectoryModel(path, isFile)
-    result = reate_directory_model.get_status()
+    result = create_directory_model.get_status()
     if "Error" in result:
         return result, 400
     return result, 200
