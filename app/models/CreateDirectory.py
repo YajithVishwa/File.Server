@@ -2,7 +2,7 @@ import os
 from flask import jsonify
 
 class CreateDirectoryModel:
-    def __init__(self, path, isFile=False):
+    def __init__(self, path, isFile='False'):
         self.path = path
         self.isFile = isFile
         self.status = self._create_directory(path)
@@ -12,7 +12,7 @@ class CreateDirectoryModel:
             if os.path.exists(path):
                 raise Exception("File/Directory Already Exists")
             else:
-                if self.isFile:
+                if self.isFile == 'True':
                     with open(path, 'w'):
                         pass
                 else:

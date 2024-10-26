@@ -1,6 +1,8 @@
 # config.py
+import os
+
 class Config:
-    SECRET_KEY = 'your_secret_key'
     DEBUG = True
-    USERNAME = 'test.local'
-    PASSWORD = 'felruorfoef3'
+    USERNAME = os.environ.get('USERNAME') or 'test.local'
+    PASSWORD = os.environ.get('PASSWORD') or 'test123'
+    UPLOAD_FOLDER = os.environ.get('UPLOAD_FOLDER') or '/uploads'

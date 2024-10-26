@@ -5,9 +5,9 @@ create_directory_blueprint = Blueprint('CreateDirectory', __name__)
 
 @create_directory_blueprint.route('/api/create', methods=['PUT'])
 def create_dir():
-    data = request.get_json()
+    data = request.form
     if not data or 'path' not in data:
-        return jsonify({"error": "Path parameter is required"}), 400
+        return jsonify({"Error": "Path parameter is required"}), 400
     path = data['path']
     isFile = False
     if "isFile" in data:
