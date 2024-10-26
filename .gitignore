@@ -10,6 +10,8 @@ venv/
 env/
 ENV/
 
+test/
+
 # IDE files
 .vscode/
 .idea/
