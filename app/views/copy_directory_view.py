@@ -12,9 +12,11 @@ def copy_dir():
         return jsonify({"Error": "destination_path parameter is required"}), 400
     source_path = data['source_path']
     destination_path = data['destination_path']
-    
-    copy_directory_model = CopyDirectoryModel(source_path, destination_path)
-    result = copy_directory_model.get_status()
-    if "Error" in result:
-        return result, 400
+    try:
+        copy_directory_model = CopyDirectoryModel(source_path, destination_path)
+        result = copy_directory_model.get_status()
+        if "Error" in result:
+            return result, 400
+    except Exception as e:
+        return jsonify({"Error": str(e)}), 500
     return result, 200

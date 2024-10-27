@@ -10,8 +10,11 @@ def metadata_dir():
     if not data or 'path' not in data:
         return jsonify({"Error": "Path parameter is required"}), 400
     path = data['path']
-    metadata_directory_model = MetaDataDirectory(path)
-    result = metadata_directory_model.get_metadata()
-    if "Error" in result:
-        return result, 400
+    try:
+        metadata_directory_model = MetaDataDirectory(path)
+        result = metadata_directory_model.get_metadata()
+        if "Error" in result:
+            return result, 400
+    except Exception as e:
+        return jsonify({"Error": str(e)}), 500
     return result, 200

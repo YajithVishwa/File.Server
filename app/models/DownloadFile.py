@@ -10,7 +10,7 @@ class DownloadFileModel:
     def dowload_file(self):
         try:
             if not os.path.exists(self.full_path):
-                raise Exception('File not found')
+                raise FileNotFoundError('File not found')
             return send_file(self.full_path, as_attachment=True)
-        except Exception as e:
+        except FileNotFoundError as e:
             return {"status" : "False", "Error": str(e)}

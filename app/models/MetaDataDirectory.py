@@ -40,8 +40,8 @@ class MetaDataDirectory:
                     modification_time_readable = datetime.fromtimestamp(modification_time).strftime('%Y-%m-%d %H:%M:%S')
                     return {"total_size": self._convert_size(total_size), "file_count": file_count, "modification_time": modification_time_readable}
             else:
-                raise Exception("File/Directory not found")
-        except Exception as e:
+                raise FileNotFoundError("File/Directory not found")
+        except FileNotFoundError as e:
             return {"Error": str(e)}
 
     def get_metadata(self):

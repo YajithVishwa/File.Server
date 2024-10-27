@@ -1,6 +1,12 @@
 import os
 from flask import jsonify, current_app
 
+class DirectoryNotEmptyError(Exception):
+    """Exception raised when the directory contains files and recursive operation is not enabled."""
+    def __init__(self, message="Directory contains files. Set recursive=True and try again."):
+        self.message = message
+        super().__init__(self.message)
+
 class DeleteDirectoryModel:
     def __init__(self, path, recursive='False'):
         self.root_fullPath = current_app.config['UPLOAD_FOLDER']
@@ -35,16 +41,18 @@ class DeleteDirectoryModel:
                         if self.recursive == 'True':
                             self.delete_files_recursively(self.full_path)
                         else:
-                            raise Exception("Directory Contain Files, Add recursive as True and try again.")
+                            raise DirectoryNotEmptyError()
                     else:
                         if not self.check_files_in_folder(self.full_path):
                             os.rmdir(self.full_path)
                         else:
-                            raise Exception("Directory Contain Files, Add recursive as True and try again.")
+                            raise DirectoryNotEmptyError()
             else:
-                raise Exception('File/Directory not found')
+                raise FileNotFoundError('File/Directory not found')
             return {"status" : "True"}
-        except Exception as e:
+        except FileNotFoundError as e:
+            return {"status" : "False", "Error": str(e)}
+        except DirectoryNotEmptyError as e:
             return {"status" : "False", "Error": str(e)}
 
     def get_status(self):

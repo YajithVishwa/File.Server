@@ -9,9 +9,11 @@ def copy_dir():
     if 'path' not in data:
         return jsonify({"Error": "path parameter is required"}), 400
     path = data['path']
-    
-    download_directory_model = DownloadFileModel(path)
-    result = download_directory_model.dowload_file()
-    if isinstance(result, dict) and "Error" in result:
-        return jsonify(result), 400
+    try:
+        download_directory_model = DownloadFileModel(path)
+        result = download_directory_model.dowload_file()
+        if isinstance(result, dict) and "Error" in result:
+            return jsonify(result), 400
+    except Exception as e:
+        return jsonify({"Error": str(e)}), 500
     return result, 200

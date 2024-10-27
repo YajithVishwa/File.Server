@@ -12,8 +12,11 @@ def create_dir():
     isFile = False
     if "isFile" in data:
         isFile = data['isFile']
-    create_directory_model = CreateDirectoryModel(path, isFile)
-    result = create_directory_model.get_status()
-    if "Error" in result:
-        return result, 400
+    try:
+        create_directory_model = CreateDirectoryModel(path, isFile)
+        result = create_directory_model.get_status()
+        if "Error" in result:
+            return result, 400
+    except Exception as e:
+        return jsonify({"Error": str(e)}), 500
     return result, 200

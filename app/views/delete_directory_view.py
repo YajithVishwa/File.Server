@@ -12,8 +12,11 @@ def create_dir():
     recursive = False
     if "recursive" in data:
         recursive = data['recursive']
-    delete_directory_model = DeleteDirectoryModel(path, recursive)
-    result = delete_directory_model.get_status()
-    if "Error" in result:
-        return result, 400
+    try:
+        delete_directory_model = DeleteDirectoryModel(path, recursive)
+        result = delete_directory_model.get_status()
+        if "Error" in result:
+            return result, 400
+    except Exception as e:
+        return jsonify({"Error": str(e)}), 500
     return result, 200

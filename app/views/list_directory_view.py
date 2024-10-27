@@ -8,11 +8,16 @@ list_directory_blueprint = Blueprint('listDirectory', __name__)
 def list_dir():
     root_path = current_app.config['UPLOAD_FOLDER']
     data = request.form
-    if not data or 'path' not in data:
-        return jsonify({"Error": "Path parameter is required"}), 400
-    path = root_path+data['path']
-    list_directory_model = ListDirectoryModel(path)
-    result = list_directory_model.get_content()
-    if "Error" in result:
-        return result, 400
+    if 'path' not in data:
+        path = root_path
+        #return jsonify({"Error": "Path parameter is required"}), 400
+    else:
+        path = root_path+data['path']
+    try:
+        list_directory_model = ListDirectoryModel(path)
+        result = list_directory_model.get_content()
+        if "Error" in result:
+            return result, 400
+    except Exception as e:
+        return jsonify({"Error": str(e)}), 500
     return result, 200

@@ -20,9 +20,9 @@ class ListDirectoryModel:
                 if os.path.exists(path):
                     return {'file': os.path.basename(path)}
                 else:
-                    return {"Error": "File/Directory not found"}
+                    raise FileNotFoundError("File/Directory not found")
             return content
-        except Exception as e:
+        except FileNotFoundError as e:
             return {"Error": str(e)}
 
     def get_content(self):

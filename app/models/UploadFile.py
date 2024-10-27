@@ -15,7 +15,7 @@ class UploadFileModel:
                 os.makedirs(self.fullPath)
             else:
                 if self.overwrite == 'False':
-                    raise Exception('File already there, use overwrite as True and try again')
+                    raise FileExistsError('File already there, use overwrite as True and try again')
             filename = self.file.filename
             filefullPath = os.path.join(self.fullPath, filename)
             self.file.save(filefullPath)
@@ -24,5 +24,5 @@ class UploadFileModel:
             else:
                 fullPath = self.path + filename
             return {"status" : "True", "fullPath": fullPath}
-        except Exception as e:
+        except FileExistsError as e:
             return {"status" : "False", "Error": str(e)}

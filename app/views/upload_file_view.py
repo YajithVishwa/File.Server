@@ -20,8 +20,11 @@ def upload_dir():
     overwrite = True
     if 'overwrite' in data:
         overwrite = data['overwrite'] 
-    upload_directory_model = UploadFileModel(path, file, overwrite)
-    result = upload_directory_model.upload_file()
-    if "Error" in result:
-        return result, 400
+    try:
+        upload_directory_model = UploadFileModel(path, file, overwrite)
+        result = upload_directory_model.upload_file()
+        if "Error" in result:
+            return result, 400
+    except Exception as e:
+        return jsonify({"Error": str(e)}), 500
     return result, 200

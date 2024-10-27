@@ -16,7 +16,7 @@ class MoveDirectoryModel:
             os.makedirs(os.path.dirname(self.full_destination_path), exist_ok=True)
             shutil.move(self.full_source_path, self.full_destination_path)
             return {"status" : "True", "destination_path": self.destination_path}
-        except Exception as e:
+        except FileNotFoundError as e:
             return {"status" : "False", "Error": str(e)}
 
     def get_status(self):

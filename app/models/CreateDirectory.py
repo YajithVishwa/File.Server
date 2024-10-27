@@ -12,7 +12,7 @@ class CreateDirectoryModel:
     def _create_directory(self, path):
         try:
             if os.path.exists(self.full_path):
-                raise Exception("File/Directory Already Exists")
+                raise FileExistsError("File/Directory Already Exists")
             else:
                 if self.isFile == 'True':
                     with open(self.full_path, 'w'):
@@ -20,7 +20,7 @@ class CreateDirectoryModel:
                 else:
                     os.makedirs(self.full_path)
             return {"status" : "True"}
-        except Exception as e:
+        except FileExistsError as e:
             return {"status" : "False", "Error": str(e)}
 
     def get_status(self):

@@ -10,7 +10,7 @@ venv/
 env/
 ENV/
 
-test/
+upload/
 
 # IDE files
 .vscode/
