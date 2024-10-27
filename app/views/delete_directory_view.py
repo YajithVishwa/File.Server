@@ -9,9 +9,9 @@ def create_dir():
     if not data or 'path' not in data:
         return jsonify({"Error": "Path parameter is required"}), 400
     path = data['path']
-    recursive = False
+    recursive = 'false'
     if "recursive" in data:
-        recursive = data['recursive']
+        recursive = data['recursive'].lower()
     try:
         delete_directory_model = DeleteDirectoryModel(path, recursive)
         result = delete_directory_model.get_status()

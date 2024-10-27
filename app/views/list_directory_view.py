@@ -10,7 +10,6 @@ def list_dir():
     data = request.form
     if 'path' not in data:
         path = root_path
-        #return jsonify({"Error": "Path parameter is required"}), 400
     else:
         path = root_path+data['path']
     try:

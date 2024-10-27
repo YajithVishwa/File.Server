@@ -8,7 +8,7 @@ class DirectoryNotEmptyError(Exception):
         super().__init__(self.message)
 
 class DeleteDirectoryModel:
-    def __init__(self, path, recursive='False'):
+    def __init__(self, path, recursive='false'):
         self.root_fullPath = current_app.config['UPLOAD_FOLDER']
         self.path = path
         self.full_path = self.root_fullPath + self.path
@@ -38,7 +38,7 @@ class DeleteDirectoryModel:
                     os.remove(self.full_path)
                 else:
                     if self.check_files_in_folder(self.full_path):
-                        if self.recursive == 'True':
+                        if self.recursive == 'true':
                             self.delete_files_recursively(self.full_path)
                         else:
                             raise DirectoryNotEmptyError()

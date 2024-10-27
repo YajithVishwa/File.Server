@@ -9,9 +9,9 @@ def create_dir():
     if not data or 'path' not in data:
         return jsonify({"Error": "Path parameter is required"}), 400
     path = data['path']
-    isFile = False
+    isFile = 'false'
     if "isFile" in data:
-        isFile = data['isFile']
+        isFile = data['isFile'].lower()
     try:
         create_directory_model = CreateDirectoryModel(path, isFile)
         result = create_directory_model.get_status()
