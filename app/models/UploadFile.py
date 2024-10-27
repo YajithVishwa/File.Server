@@ -19,10 +19,7 @@ class UploadFileModel:
             filename = self.file.filename
             filefullPath = os.path.join(self.fullPath, filename)
             self.file.save(filefullPath)
-            if self.path[:-1] != '/':
-                fullPath = self.path + '/' + filename
-            else:
-                fullPath = self.path + filename
+            fullPath = self.path + filename
             return {"status" : "True", "fullPath": fullPath}
         except FileExistsError as e:
             return {"status" : "False", "Error": str(e)}
